@@ -23,8 +23,14 @@ Find weak, reused, breached passwords before attackers do.
 - Up to 500 users, offline, one-click owner report
 - Prioritizes what to fix first
 
-**Philosophy:** One price, confident mission. Suitable paths only, not trends.
 
+**Philosophy:** One price, confident mission. Suitable paths only, not trends.
+## Trusted by Homelabbers
+
+**As seen on r/homelab and r/homelabsales** - Built for home labs, small shops, and MSPs. 100% offline, local.
+
+Live discussion: https://www.reddit.com/r/homelabsales/
+Free site: https://mitchell5584dm-tech.github.io/Security-Operations-Forensics-Toolkit/
 ---
 
 ## Quick Start
