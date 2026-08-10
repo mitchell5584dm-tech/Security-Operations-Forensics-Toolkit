@@ -5,7 +5,7 @@
 
 Small business model with hardcoded help that also covers **individuals, startups, non-profits, home labs, and schools** right now.
 
-Live site: https://YOURUSERNAME.github.io (replace YOURUSERNAME)
+   Live site: https://mitchell5584dm-tech.github.io/Security-Operations-Forensics-Toolkit/
 
 ---
 
