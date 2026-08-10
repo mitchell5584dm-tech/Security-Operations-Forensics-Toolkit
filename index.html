@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RetireSec Workbench - Security Help for Everyone</title>
+<meta name="description" content="Small business security help for everyone. Free Linux triage helper + $99/yr password health check. 100% offline. Built in retirement as busy work that helps.">
+<style>
+:root{--green:#16a34a;--blue:#2563eb;--bg:#f8fafc;--ink:#0f172a;--muted:#475569}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit}
+header{padding:64px 20px 36px;text-align:center;background:white;border-bottom:1px solid #e2e8f0}
+h1{font-size:44px;margin:0 0 8px;letter-spacing:-1px}
+.sub{font-size:19px;color:var(--muted);max-width:680px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#64748b;font-weight:800}
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;margin:4px}
+.b-green{background:#dcfce7;color:#166534}.b-blue{background:#dbeafe;color:#1e40af}.b-gray{background:#f1f5f9;color:#334155}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.btn{padding:13px 20px;border-radius:12px;text-decoration:none;font-weight:800;display:inline-block;margin:8px 8px 0 0;border:1px solid transparent}
+.btn-free{background:var(--green);color:white}.btn-pro{background:var(--blue);color:white}.btn-dark{background:#0f172a;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.card{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:22px}
+.card.free{border-left:6px solid var(--green)} .card.pro{border-left:6px solid var(--blue)}
+.card h3{margin:6px 0 8px}
+.check{background:#fffbeb;border:1px solid #fde68a;border-radius:14px;padding:18px;margin:22px 0}
+.side{position:fixed;top:0;left:0;bottom:0;width:260px;background:#0f172a;color:white;padding:18px;transform:translateX(-100%);transition:transform .25s ease;z-index:99;overflow:auto}
+.side.open{transform:translateX(0)}
+.side a{display:block;color:#cbd5e1;text-decoration:none;padding:10px 12px;border-radius:8px;margin:4px 0}
+.side a:hover{background:#1e293b;color:white}
+.main{transition:margin-left .25s ease}
+.main.shift{margin-left:260px}
+.topbar{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid #e2e8f0;padding:10px 16px;display:flex;gap:12px;align-items:center;z-index:10}
+.hamburger{font-size:22px;cursor:pointer;background:white;border:1px solid #e2e8f0;border-radius:8px;padding:6px 10px}
+</style>
+</head>
+<body>
+
+<!-- FIXED SIDE PANEL - DOES NOT DISAPPEAR - SAVES STATE -->
+<div id="side" class="side">
+<div style="font-weight:900;font-size:18px;margin-bottom:12px">RetireSec Workbench</div>
+<div style="font-size:12px;color:#94a3b8;margin-bottom:18px">$0 to start • Free tools stay free</div>
+<a href="#top">🏠 Home</a>
+<a href="#checklist">✅ Small Business Checklist</a>
+<a href="#tools">🛠️ Tools</a>
+<a href="#free">🟢 Linux Helper - Free</a>
+<a href="#pro">🔵 Password Health - Pro</a>
+<a href="#launch">🚀 Launch Stack - Free</a>
+<a href="#suitable">💡 Suitable Path Philosophy</a>
+<hr style="border-color:#1e293b;margin:16px 0">
+<a href="https://your-render-app.onrender.com/start-trial/credentialauditor">▶️ Start 14-Day Trial</a>
+<a href="https://your-render-app.onrender.com/buy/credentialauditor">💳 Buy $99/yr</a>
+<a href="mailto:your-email@example.com">✉️ Contact</a>
+<div style="margin-top:20px;font-size:11px;color:#64748b">Side panel fix: open/closed saved in localStorage - won't keep disappearing.</div>
+</div>
+
+<div id="main" class="main">
+<div class="topbar">
+<button id="ham" class="hamburger" aria-label="Menu">☰</button>
+<span class="kicker">Overall language for everyone • Small business model</span>
+</div>
+
+<header id="top">
+<div class="kicker">Built in retirement • Busy work that helps</div>
+<h1>RetireSec Workbench</h1>
+<p class="sub"><strong>Security help for everyone.</strong> No jargon. No scare tactics. Small business model with hardcoded help that works for individuals, startups, non-profits, home labs, and schools right now.</p>
+<div style="margin-top:14px">
+<span class="badge b-green">FREE tools forever</span>
+<span class="badge b-blue">100% Offline - No Cloud</span>
+<span class="badge b-gray">$0 to start • $99/yr Pro</span>
+</div>
+<div style="margin-top:22px">
+<a class="btn btn-free" href="#tools">See Free Tools</a>
+<a class="btn btn-pro" href="https://your-render-app.onrender.com">Launch App - 14-Day Trial</a>
+</div>
+<div style="font-size:11px;color:#94a3b8;margin-top:8px">Replace your-render-app.onrender.com with your Render URL. Add ?app=YOUR_URL to auto-save.</div>
+</header>
+
+<div class="wrap">
+<div id="checklist" class="check">
+<div class="kicker">Small Business Hardcoded Help</div>
+<strong>Do this week (20 mins) - for startups, individuals, small biz:</strong>
+<ol style="margin:10px 0 0 18px">
+<li><strong>Run Password Health Check</strong> - #1 breach cause is weak passwords</li>
+<li><strong>Check who has admin</strong> - Remove ex-employees today</li>
+<li><strong>Test your backup restore</strong> - Most small biz never test</li>
+<li><strong>Scan Linux logs after updates</strong> - Catches miners/backdoors early</li>
+<li><strong>Look for weird SaaS invoices</strong> - Fake invoices target SMBs</li>
+</ol>
+</div>
+
+<div id="tools" class="grid">
+<div id="free" class="card free">
+<div class="kicker">Free Forever • For Everyone</div>
+<h3>Linux Triage Helper</h3>
+<p>Quick, safe check when your Linux box feels off. For home users, students, small shops. Educational only.</p>
+<ul>
+<li>Collects running processes & recent logs</li>
+<li>Creates simple report you can share with a friend or tech</li>
+<li>Runs offline, read-only, safe</li>
+</ul>
+<p><strong>Best for:</strong> Individuals, Students, Home Labs, Schools</p>
+<a class="btn btn-free" href="#">Download Free ZIP</a>
+<a class="btn btn-dark" href="#">How it works</a>
+</div>
+
+<div id="pro" class="card pro">
+<div class="kicker">Pro • Small Business & Startup Essential</div>
+<h3>Password Health Check</h3>
+<p>Find weak, reused, and breached passwords before attackers do. Built for folks who can't afford a $5k audit.</p>
+<ul>
+<li>Scans up to 500 users (Pro unlimited)</li>
+<li>Offline - passwords never leave your machine</li>
+<li>One-click owner report for compliance / QBR</li>
+<li>Prioritizes what to fix first</li>
+</ul>
+<p><strong>Best for:</strong> Small Business, Startups, MSPs, Non-profits</p>
+<a class="btn btn-dark" href="https://your-render-app.onrender.com/start-trial/credentialauditor">Start 14-Day Full Trial</a>
+<a class="btn btn-pro" href="https://your-render-app.onrender.com/buy/credentialauditor">Buy $99/yr - Small Business License</a>
+</div>
+</div>
+
+<div id="launch" class="card">
+<div class="kicker">Launch Stack - Basically Free</div>
+<h3>Overall platform - $0 to launch</h3>
+<ul>
+<li><strong>GitHub Pages:</strong> $0 forever - this page you are on</li>
+<li><strong>Render.com free tier:</strong> $0 until customers - 750 hrs/mo free</li>
+<li><strong>Stripe test mode:</strong> $0 until real sale - then 2.9% + 30c</li>
+<li><strong>Browsers for testing:</strong> Chrome, Edge, Firefox, Brave - all free</li>
+<li><strong>Total to launch:</strong> <strong>$0</strong></li>
+</ul>
+<p>Push this file to <code>YOURUSERNAME.github.io</code> repo, enable Pages, live in 2 mins. No backend needed for landing.</p>
+</div>
+
+<div id="suitable" class="card">
+<div class="kicker">Philosophy - Confident Product, Open Ear</div>
+<h3>Suitable Paths Only - Not Trends</h3>
+<p><strong>We do one thing well:</strong> Find credential health issues that vaults miss - browser artifacts, dormant logins, recovery chains - 100% local.</p>
+<p><strong>Built by a retired guy with nothing but time.</strong> Free tools stay free. Pro keeps lights on. I'm not chasing trends or my bank account. If you have a suitable use case where local credential truth would help your clients, my door is open. I listen to field stories, not feature votes.</p>
+<p>Time is free, so ratio to income is always in the black. Walmart approach: 70% cheaper than Passportal, not 95% cheaper that raises doubt. Clean, honest, helpful.</p>
+</div>
+
+</div>
+
+<footer style="text-align:center;padding:30px 20px;color:#64748b;font-size:13px">
+Built as retirement busy work that compensates time with purpose.<br>
+Free tools stay free. Pro tool keeps lights on. One price, confident mission.<br>
+Contact: your-email@example.com • Replace with your real email.
+</footer>
+</div>
+
+<script>
+// FIXED SIDE PANEL - DOES NOT KEEP DISAPPEARING
+const side=document.getElementById('side');
+const main=document.getElementById('main');
+const ham=document.getElementById('ham');
+const KEY='retiresec_side_open';
+
+function applyState(open){
+  if(open){side.classList.add('open');main.classList.add('shift');}
+  else{side.classList.remove('open');main.classList.remove('shift');}
+  localStorage.setItem(KEY, open ? '1' : '0');
+}
+
+const saved = localStorage.getItem(KEY);
+applyState(saved === '1'); // default closed on first visit
+
+ham.addEventListener('click', ()=>{
+  const isOpen = side.classList.contains('open');
+  applyState(!isOpen);
+});
+
+// Close on outside click on mobile
+document.addEventListener('click',(e)=>{
+  if(window.innerWidth<900 && side.classList.contains('open') && !side.contains(e.target) && e.target!==ham){
+    applyState(false);
+  }
+});
+
+// Auto-fix Render links if ?app= URL provided
+const params=new URLSearchParams(location.search);
+if(params.get('app')) localStorage.setItem('appUrl', params.get('app'));
+const appUrl=localStorage.getItem('appUrl');
+if(appUrl){
+  document.querySelectorAll('a[href*="your-render-app"]').forEach(a=>a.href=appUrl);
+}
+</script>
+</body>
+</html>
