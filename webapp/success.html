@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Success! CredentialAuditor Pro</title>
+<style>body{font-family:system-ui;background:#0f172a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
+.box{background:#1e293b;padding:40px;border-radius:16px;text-align:center;max-width:600px}
+h1{color:#22c55e} .code{background:#000;color:#0f0;padding:16px;font-family:monospace;font-size:20px;border-radius:8px;margin:20px 0}
+a{background:#6366f1;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;display:inline-block;margin:5px}</style>
+</head><body><div class="box">
+<h1>✅ Payment Success!</h1>
+<h2>CredentialAuditor Pro Active</h2>
+<p>Your 14-day trial started. You'll be billed $99/yr on Aug 25.</p>
+<div class="code" id="lic">OWNER-PRO-2026</div>
+<p>Save this license. Check email for full key.</p>
+<a href="/">← Workbench</a>
+<a href="#" onclick="navigator.clipboard.writeText(document.getElementById('lic').innerText);alert('Copied!')">Copy License</a>
+<br><br>
+<a href="https://buy.stripe.com/5kQ14m2DQackeP687L5sA00" style="background:transparent;border:1px solid #555;font-size:12px">Manage Billing</a>
+<script>
+let r=Math.random().toString(36).toUpperCase().slice(2,7);
+document.getElementById('lic').innerText=`OWNER-${r}-2026-PRO`;
+</script>
+</div></body></html>
