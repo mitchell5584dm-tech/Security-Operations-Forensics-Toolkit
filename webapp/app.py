@@ -76,3 +76,8 @@ def activate():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
+
+@app.route('/success.html')
+@app.route('/success')
+def success_page():
+    return open('success.html').read()
