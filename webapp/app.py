@@ -1,18 +1,40 @@
-import os
+import os, secrets, smtplib
+from email.mime.text import MIMEText
 from flask import Flask, request, jsonify, redirect
 from datetime import datetime, timedelta
-import secrets
+from pathlib import Path
 
 app = Flask(__name__)
+TRIALS={}
+LICENSES={}
+OWNER_CODES={"TEST-14DAY-RETIRES-2026":14,"RETIRESEC-OWNER-ALL-ACCESS":3650,"FREETRIAL-MITCH-5584-2026":14,"RETIRES-2026-OWNER":3650}
 
-OWNER_CODES = {
-    "TEST-14DAY-RETIRES-2026": 14,
-    "RETIRESEC-OWNER-ALL-ACCESS": 3650,
-    "FREETRIAL-MITCH-5584-2026": 14,
-    "RETIRES-2026-OWNER": 3650,
-}
-
-TRIALS = {}
+def send_license_email(to_email, code):
+    user=os.getenv("GMAIL_USER")
+    pwd=os.getenv("GMAIL_APP_PASSWORD","").replace(" ","")
+    if not user or not pwd:
+        print(f"NO CREDS - would email {to_email}: {code}")
+        return False
+    try:
+        html=f"""<div style="font-family:system-ui;max-width:600px;margin:auto">
+<h1 style="color:#16a34a">✅ RetireSec Pro Activated!</h1>
+<p>Thanks for buying CredentialAuditor Pro $99/yr</p>
+<div style="background:#000;color:#0f0;padding:20px;font-size:24px;border-radius:10px;text-align:center;font-family:monospace">{code}</div>
+<p>Use: <code>python3 credential_auditor_with_notifications.py --license {code}</code></p>
+<p>Download: https://mitchell5584dm-tech.github.io/Security-Operations-Forensics-Toolkit/</p>
+<p>Cancel anytime: https://billing.stripe.com</p></div>"""
+        msg=MIMEText(html,'html')
+        msg['Subject']=f"Your RetireSec Pro License: {code}"
+        msg['From']=user
+        msg['To']=to_email
+        with smtplib.SMTP_SSL('smtp.gmail.com',465) as s:
+            s.login(user,pwd)
+            s.send_message(msg)
+        print(f"EMAILED {to_email} -> {code}")
+        return True
+    except Exception as e:
+        print(f"Email fail: {e}")
+        return False
 
 @app.route('/')
 def index():
@@ -20,67 +42,53 @@ def index():
 
 @app.route('/health')
 def health():
-    return "OK - RetireSec Running | See /api/health for details"
+    return "OK - Gmail configured" if os.getenv("GMAIL_USER") else "OK - NO GMAIL CREDS"
 
 @app.route('/api/health')
-def api_health():
-    return jsonify({
-        "status": "LIVE",
-        "version": "2.0 - With Redirect",
-        "time": datetime.utcnow().isoformat(),
-        "frontend": "https://mitchell5584dm-tech.github.io/Security-Operations-Forensics-Toolkit/"
-    })
+def api_h():
+    return jsonify({"status":"LIVE","gmail": bool(os.getenv("GMAIL_USER"))})
 
-@app.route('/success.html')
 @app.route('/success')
-def success_page():
-    try:
-        return open('success.html').read()
-    except:
-        return open(os.path.join(os.path.dirname(__file__), 'success.html')).read()
+@app.route('/success.html')
+def success():
+    # try multiple locations
+    for p in [Path("success.html"), Path("webapp/success.html"), Path(__file__).parent/"success.html"]:
+        if p.exists():
+            return p.read_text()
+    return "Success - file not found"
 
-@app.route('/start-trial/credentialauditor', methods=['GET','POST'])
-def trial():
-    if request.method == 'GET':
-        return """
-        <html><body style='font-family:system-ui;max-width:600px;margin:60px auto;text-align:center'>
-        <h1>Start 14-Day Trial - RetireSec Pro</h1>
-        <p>100% Offline - No credit card required</p>
-        <form method=POST>
-        <input name='email' placeholder='Your email' required style='padding:12px;width:80%'><br><br>
-        <button style='padding:14px 28px;background:#2563eb;color:white;border:0;border-radius:8px;font-weight:bold;font-size:16px'>Get Trial Code</button>
-        </form>
-        <p style='margin-top:30px;color:#666'>Owner test code: <b>TEST-14DAY-RETIRES-2026</b></p>
-        </body></html>
-        """
-    email = request.form.get('email','user')
-    code = f"TRIAL-{secrets.token_hex(3).upper()}-2026"
-    TRIALS[code] = datetime.utcnow() + timedelta(days=14)
-    return f"<html><body style='font-family:system-ui;text-align:center;margin-top:80px'><h1>Trial Active for {email}</h1><h2 style='background:#f3f4f6;padding:20px;border-radius:10px;display:inline-block'>{code}</h2><p>Expires in 14 days</p></body></html>"
+@app.route('/webhook/stripe', methods=['POST','GET'])
+def webhook():
+    data=request.get_json(silent=True) or {}
+    email=None
+    try:
+        obj=data.get('data',{}).get('object',{})
+        email=obj.get('customer_email') or (obj.get('customer_details') or {}).get('email') or obj.get('email')
+    except:
+        pass
+    if not email:
+        email=request.args.get('email') or "customer@example.com"
+    code=f"PRO-{secrets.token_hex(3).upper()}-2026"
+    LICENSES[email]=code
+    send_license_email(email,code)
+    return jsonify({"received":True,"email":email,"license":code,"emailed": bool(os.getenv("GMAIL_USER"))})
+
+@app.route('/api/get-license/<email>')
+def gl(email):
+    code=LICENSES.get(email) or f"PRO-{secrets.token_hex(3).upper()}-2026"
+    LICENSES[email]=code
+    return f"<html><body style='text-align:center;margin-top:60px;font-family:system-ui'><h1>Your License: {code}</h1><p>For {email}</p><p>Check email too!</p></body></html>"
 
 @app.route('/buy/credentialauditor')
 def buy():
-    return """
-    <html><body style='font-family:system-ui;text-align:center;margin-top:80px'>
-    <h1>Buy RetireSec Pro - $99/year</h1>
-    <p>Stripe checkout enables after approval</p>
-    <p>Use code: <b>RETIRESEC-OWNER-ALL-ACCESS</b> to test full access now</p>
-    <br><a href='/start-trial/credentialauditor'>Start 14-Day Free Trial Instead</a>
-    </body></html>
-    """
+    return redirect("https://buy.stripe.com/5kQ14m2DQackeP687L5sA00")
 
 @app.route('/api/activate', methods=['POST','GET'])
 def activate():
-    data = request.get_json(silent=True) or request.form or request.args
-    code = str(data.get('code','')).upper().strip()
-    if code in OWNER_CODES:
-        days = OWNER_CODES[code]
-        exp = datetime.utcnow() + timedelta(days=days)
-        return jsonify({"valid": True, "code": code, "days": days, "expiry": exp.isoformat(), "message": "Owner access valid"})
-    if code in TRIALS:
-        return jsonify({"valid": True, "code": code, "expiry": TRIALS[code].isoformat(), "message": "Trial valid"})
-    return jsonify({"valid": False, "message": "Invalid code. Try TEST-14DAY-RETIRES-2026"}), 404
+    d=request.get_json(silent=True) or request.form or request.args
+    c=str(d.get('code','')).upper().strip()
+    valid = c in OWNER_CODES or c in TRIALS or c in LICENSES.values()
+    return jsonify({"valid": valid, "code": c})
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
+if __name__=='__main__':
+    app.run(host='0.0.0.0',port=int(os.getenv("PORT",10000)))
