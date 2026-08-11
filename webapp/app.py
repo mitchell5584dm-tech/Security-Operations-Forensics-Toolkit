@@ -31,6 +31,14 @@ def api_health():
         "frontend": "https://mitchell5584dm-tech.github.io/Security-Operations-Forensics-Toolkit/"
     })
 
+@app.route('/success.html')
+@app.route('/success')
+def success_page():
+    try:
+        return open('success.html').read()
+    except:
+        return open(os.path.join(os.path.dirname(__file__), 'success.html')).read()
+
 @app.route('/start-trial/credentialauditor', methods=['GET','POST'])
 def trial():
     if request.method == 'GET':
@@ -76,8 +84,3 @@ def activate():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
-
-@app.route('/success.html')
-@app.route('/success')
-def success_page():
-    return open('success.html').read()
