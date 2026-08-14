@@ -3,12 +3,10 @@ from flask import Flask, request, jsonify, redirect, send_from_directory
 
 app = Flask(__name__)
 
-# ── Serve index.html at root — no GitHub Pages redirect ──
 @app.route('/')
 def index():
     return send_from_directory('..', 'index.html')
 
-# ── Keep-alive ping — called every 14 min by index.html JS ──
 @app.route('/ping')
 def ping():
     return jsonify({"status": "alive"})
@@ -25,12 +23,9 @@ def try_send_email(to_email, code):
                 "subject": f"Your RetireSec License {code}",
                 "html": f"""
                 <h1>✅ RetireSec Pro Active: {code}</h1>
-                <p>Thanks for subscribing!</p>
                 <p><b>License:</b> {code}</p>
                 <p>Use: <code>python3 credential_auditor_with_notifications.py --license {code}</code></p>
-                <p>Keep this email safe.</p>
-                <p><a href="https://security-operations-forensics-toolkit.onrender.com">
-                Return to RetireSec Workbench</a></p>
+                <p><a href="https://security-operations-forensics-toolkit.onrender.com">Return to RetireSec Workbench</a></p>
                 """
             }, timeout=15)
         return r.status_code == 200, f"{r.status_code}: {r.text[:400]}"
@@ -67,4 +62,28 @@ def cancel():
     </div></body></html>"""
 
 @app.route('/api/health')
-def health
+def health():
+    return jsonify({"has_resend": bool(os.getenv("RESEND_API_KEY")), "status": "ok"})
+
+@app.route('/webhook/stripe', methods=['POST', 'GET'])
+def webhook():
+    data = request.get_json(silent=True) or {}
+    email = request.args.get('email', 'mitchell5584.dm@gmail.com')
+    try:
+        obj = data.get('data', {}).get('object', {})
+        email = (obj.get('customer_email') or
+                 (obj.get('customer_details') or {}).get('email') or
+                 obj.get('email') or email)
+    except Exception:
+        pass
+    code = f"PRO-{secrets.token_hex(3).upper()}-2026"
+    sent, info = try_send_email(email, code)
+    return jsonify({"email": email, "license": code, "emailed": sent, "info": info})
+
+@app.route('/buy/credentialauditor')
+def buy():
+    return redirect("https://buy.stripe.com/5kQ14m2DQackeP687L5sA00")
+
+if __name__ == '__main__':
+    port = int(os.getenv("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
