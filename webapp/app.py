@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return send_from_directory('..', 'index.html')
+    return send_from_directory('.', 'index_render.html')
 
 @app.route('/ping')
 def ping():
