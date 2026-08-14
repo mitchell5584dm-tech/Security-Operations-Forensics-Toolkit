@@ -324,6 +324,128 @@ document.addEventListener('click', function(e){
   }
 });
 </script>
+<section id="arcana-demo" style="background:#050a14;padding:60px 20px;font-family:'Courier New',monospace;">
+  <div style="max-width:800px;margin:0 auto;">
+    <h2 style="color:#38bdf8;text-align:center;font-family:system-ui,sans-serif;font-size:1.6rem;margin-bottom:8px;">
+      8 Minutes of ARCANA vs. 3 Days Manual
+    </h2>
+    <p style="color:#64748b;text-align:center;font-family:system-ui,sans-serif;margin-bottom:32px;">
+      Actual pipeline output — iPhone 14 Pro, iOS 17.4. Data anonymized for demo.
+    </p>
+    <div style="background:#0d1117;border:1px solid #1e3a5f;border-radius:12px;padding:24px;">
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:#ffbd2e;display:inline-block;"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:#28ca41;display:inline-block;"></span>
+        <span style="color:#8b949e;font-size:0.75rem;margin-left:8px;">ARCANA — forensics_pipeline.py [iPhone 14 Pro / iOS 17.4.1]</span>
+      </div>
+      <div id="arc-output" style="color:#e6edf3;font-size:0.85rem;line-height:1.9;"></div>
+      <span id="arc-cursor" style="display:inline-block;width:8px;height:16px;background:#38bdf8;animation:blink 1s step-end infinite;vertical-align:middle;"></span>
+    </div>
+
+    <div id="arc-report" style="display:none;margin-top:24px;background:#0d1117;border:1px solid #1e3a5f;border-radius:12px;padding:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #1e3a5f;padding-bottom:16px;">
+        <div>
+          <div style="color:#38bdf8;font-family:system-ui,sans-serif;font-weight:700;font-size:1.1rem;">ARCANA Forensics Report</div>
+          <div style="color:#64748b;font-family:system-ui,sans-serif;font-size:0.8rem;">Case #ARK-2026-0814 · Generated in 00:08:22 · Court-ready PDF</div>
+        </div>
+        <div style="background:#1e3a5f;padding:8px 16px;border-radius:8px;color:#38bdf8;font-family:system-ui,sans-serif;font-size:0.85rem;font-weight:700;">COMPLETE</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;font-family:system-ui,sans-serif;">
+        <div style="background:#0a1628;padding:16px;border-radius:8px;text-align:center;">
+          <div style="color:#38bdf8;font-size:1.8rem;font-weight:700;" id="arc-sms">0</div>
+          <div style="color:#64748b;font-size:0.75rem;">Messages Extracted</div>
+        </div>
+        <div style="background:#0a1628;padding:16px;border-radius:8px;text-align:center;">
+          <div style="color:#f59e0b;font-size:1.8rem;font-weight:700;" id="arc-gps">0</div>
+          <div style="color:#64748b;font-size:0.75rem;">Location Points</div>
+        </div>
+        <div style="background:#0a1628;padding:16px;border-radius:8px;text-align:center;">
+          <div style="color:#22c55e;font-size:1.8rem;font-weight:700;" id="arc-total">0</div>
+          <div style="color:#64748b;font-size:0.75rem;">Total Artifacts</div>
+        </div>
+      </div>
+      <div style="font-family:system-ui,sans-serif;display:flex;flex-direction:column;gap:10px;">
+        <div style="color:#f85149;background:#1a0a0a;padding:12px 16px;border-radius:8px;font-size:0.85rem;">
+          🔴 <strong>Key Finding:</strong> 23 deleted Signal messages recovered — timestamps place device at incident location Feb 12–14, 2026
+        </div>
+        <div style="color:#e3b341;background:#1a1400;padding:12px 16px;border-radius:8px;font-size:0.85rem;">
+          ⚠️ <strong>Location:</strong> 847 GPS points corroborate presence at 4 flagged addresses — ±3m accuracy, timestamps intact
+        </div>
+        <div style="color:#3fb950;background:#0a1a0a;padding:12px 16px;border-radius:8px;font-size:0.85rem;">
+          ✅ <strong>Chain of Custody:</strong> MD5 + SHA-256 hash-verified extraction — fully court-admissible
+        </div>
+      </div>
+    </div>
+
+    <div id="arc-cta" style="display:none;text-align:center;margin-top:28px;">
+      <p style="color:#94a3b8;font-family:system-ui,sans-serif;margin-bottom:16px;">
+        That report took ARCANA <strong style="color:#e6edf3;">8 minutes and 22 seconds.</strong><br>
+        A manual analyst: <strong style="color:#f85149;">3 days — and still might miss the deleted Signal messages.</strong>
+      </p>
+      <a href="#pricing" style="background:#38bdf8;color:#000;padding:14px 32px;border-radius:10px;text-decoration:none;font-family:system-ui,sans-serif;font-weight:700;font-size:1rem;">Start 14-Day Free Trial — No Card Required</a>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  const lines = [
+    {t:'$ arcana --device iphone-14-pro --case ARK-2026-0814', d:0, c:'#8b949e'},
+    {t:'[*] ARCANA v3.1 — initializing extraction pipeline...', d:700, c:'#38bdf8'},
+    {t:'[*] Device: Apple iPhone 14 Pro (iOS 17.4.1)', d:1300, c:'#e6edf3'},
+    {t:'[*] Backup decryption: SUCCESS', d:1900, c:'#3fb950'},
+    {t:'', d:2200},
+    {t:'[*] Stage 1/4 — Communication artifacts...', d:2300, c:'#38bdf8'},
+    {t:'    → SMS/iMessage:  47,382 messages (+23 recovered deleted)', d:2800, c:'#e6edf3'},
+    {t:'    → WhatsApp:       8,401 messages + 1,247 media files', d:3200, c:'#e6edf3'},
+    {t:'    → Signal:         ENCRYPTED — attempting key recovery...', d:3600, c:'#e3b341'},
+    {t:'    → Signal:         KEY RECOVERED — 634 messages decrypted', d:4300, c:'#3fb950'},
+    {t:'', d:4700},
+    {t:'[*] Stage 2/4 — Location history...', d:4800, c:'#38bdf8'},
+    {t:'    → GPS artifacts:       1,247 points (±3m accuracy)', d:5200, c:'#e6edf3'},
+    {t:'    → Cell tower records:  3,891 correlated pings', d:5600, c:'#e6edf3'},
+    {t:'    → Wi-Fi probe history: 284 unique networks', d:6000, c:'#e6edf3'},
+    {t:'', d:6300},
+    {t:'[*] Stage 3/4 — Recovering deleted artifacts...', d:6400, c:'#38bdf8'},
+    {t:'    → Photos:         1,247 recovered from unallocated space', d:6800, c:'#3fb950'},
+    {t:'    → Uninstalled apps: 23 with residual data intact', d:7200, c:'#3fb950'},
+    {t:'    → Browser history: 8,204 URLs (incl. 1,847 private mode)', d:7600, c:'#3fb950'},
+    {t:'', d:7900},
+    {t:'[*] Stage 4/4 — Timeline correlation + report generation...', d:8000, c:'#38bdf8'},
+    {t:'    → 94,847 events unified into single timeline', d:8400, c:'#e6edf3'},
+    {t:'    → MD5 / SHA-256 hash verification: PASSED', d:8800, c:'#3fb950'},
+    {t:'    → Generating court-ready PDF...', d:9200, c:'#e6edf3'},
+    {t:'', d:9700},
+    {t:'[✓] COMPLETE — 00:08:22', d:9800, c:'#38bdf8'},
+    {t:'[✓] case_ARK-2026-0814_report.pdf  —  court-admissible', d:10200, c:'#3fb950'},
+  ];
+  const out = document.getElementById('arc-output');
+  lines.forEach(l => setTimeout(() => {
+    const d = document.createElement('div');
+    d.textContent = l.t;
+    if(l.c) d.style.color = l.c;
+    out.appendChild(d);
+  }, l.d));
+  function counter(id, target, ms) {
+    const el = document.getElementById(id);
+    const steps = 40, inc = target/steps;
+    let cur = 0;
+    const iv = setInterval(() => {
+      cur = Math.min(cur+inc, target);
+      el.textContent = Math.floor(cur).toLocaleString();
+      if(cur >= target) clearInterval(iv);
+    }, ms/steps);
+  }
+  setTimeout(() => {
+    document.getElementById('arc-cursor').style.display='none';
+    document.getElementById('arc-report').style.display='block';
+    document.getElementById('arc-cta').style.display='block';
+    counter('arc-sms', 47382, 1400);
+    counter('arc-gps', 1247, 1400);
+    counter('arc-total', 94847, 1400);
+  }, 10800);
+})();
+</script>
 
 </body>
 </html>
