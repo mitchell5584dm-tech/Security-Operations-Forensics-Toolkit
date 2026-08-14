@@ -6,7 +6,7 @@ app = Flask(__name__)
 # ── Serve index.html at root — no GitHub Pages redirect ──
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('..', 'index.html')
 
 # ── Keep-alive ping — called every 14 min by index.html JS ──
 @app.route('/ping')
